@@ -1,5 +1,21 @@
 module GridapMUMPS
 
-# Write your package code here.
+using MUMPS
+import MPI
+import SparseArrays
+
+import Gridap
+
+export MUMPSSolver
+
+# Re-export MUMPS keywords
+export mumps_unsymmetric
+export mumps_definite	
+export mumps_symmetric	
+export default_icntl	
+export default_cntl32	
+export default_cntl64
+
+include("solver.jl")
 
 end

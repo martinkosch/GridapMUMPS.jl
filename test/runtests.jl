@@ -1,10 +1,11 @@
-using GridapMUMPS
+using SafeTestsets
 using Test
-using Aqua
 
-@testset "GridapMUMPS.jl" begin
-    @testset "Code quality (Aqua.jl)" begin
-        Aqua.test_all(GridapMUMPS)
-    end
-    # Write your tests here.
+@safetestset "Code quality (Aqua.jl)" begin
+    using Aqua, GridapMUMPS
+    Aqua.test_all(GridapMUMPS; ambiguities = false)
+end
+
+@safetestset "Static Poisson equation" begin
+    include("static_poisson.jl")
 end
