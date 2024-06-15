@@ -1,0 +1,3 @@
+var documenterSearchIndex = {"docs":
+[{"location":"","page":"Home","title":"Home","text":"CurrentModule = GridapMUMPS","category":"page"},{"location":"#GridapMUMPS","page":"Home","title":"GridapMUMPS","text":"","category":"section"},{"location":"","page":"Home","title":"Home","text":"Documentation for GridapMUMPS.","category":"page"},{"location":"","page":"Home","title":"Home","text":"","category":"page"},{"location":"","page":"Home","title":"Home","text":"Modules = [GridapMUMPS]","category":"page"},{"location":"#GridapMUMPS.MUMPSSolver","page":"Home","title":"GridapMUMPS.MUMPSSolver","text":"struct MUMPSSolver <: LinearSolver end\n\nWrapper of the MUMPS solver provided by MUMPS.jl\n\n\n\n\n\n","category":"type"}]
+}
