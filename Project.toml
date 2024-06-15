@@ -3,6 +3,12 @@ uuid = "9df324b7-e30f-4c4a-b093-6a724de1febb"
 authors = ["Martin Kosch <martin.kosch@gmail.com> and contributors"]
 version = "1.0.0-DEV"
 
+[deps]
+Gridap = "56d4f2e9-7ea1-5844-9cf6-b9c51ca7ce8e"
+MPI = "da04e1cc-30fd-572f-bb4f-1f8673147195"
+MUMPS = "55d2b088-9f4e-11e9-26c0-150b02ea6a46"
+SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
+
 [compat]
 julia = "1"
 
