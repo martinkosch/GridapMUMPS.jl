@@ -16,6 +16,10 @@ export default_icntl
 export default_cntl32	
 export default_cntl64
 
+function __init__()
+    MPI.Init()
+end
+
 include("solver.jl")
 
 end

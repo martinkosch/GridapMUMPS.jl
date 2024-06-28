@@ -1,7 +1,6 @@
-# Example adapted from https://github.com/gridap/Gridap.jl/blob/master/test/GridapTests/PoissonTests.jl
+# Example adapted from https://github.com/gridap/Gridap.jl/blob/master/test/GridapTests/PoissonTests.jl for Gridap 18.02
 
 using Test
-using Gridap
 using Gridap
 import Gridap: ∇
 using GridapMUMPS

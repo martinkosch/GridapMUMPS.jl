@@ -3,40 +3,30 @@
 
 Wrapper of the MUMPS solver provided by MUMPS.jl
 """
-struct MUMPSSolver <: Gridap.Algebra.LinearSolver
+mutable struct MUMPSSolver <: Gridap.Algebra.LinearSolver
     args::Tuple
     function MUMPSSolver(args...)
         return new(args)
     end
 end
 
-mutable struct MUMPSSymbolicSetup{M} <: Gridap.Algebra.SymbolicSetup
-    mumps::M
-
-    function MUMPSSymbolicSetup(mat::AbstractMatrix, args...; finalize_MPI::Bool = false)
-        MPI.Init()
-        mumps = MUMPS.Mumps{eltype(mat)}(args...)
-        ret = new{typeof(mumps)}(mumps)
-        finalizer((args...) -> release_handle(args...; finalize_MPI), ret)
-        return ret
+mutable struct MUMPSSymbolicSetup <: Gridap.Algebra.SymbolicSetup 
+    args::Tuple
+    function MUMPSSymbolicSetup(::AbstractMatrix, args...)
+        return new(args)
     end
-end
-
-function release_handle(mss::MUMPSSymbolicSetup; finalize_MPI::Bool = false)
-    MUMPS.finalize(mss.mumps)
-    finalize_MPI && MPI.Finalize()
-    return nothing
 end
 
 mutable struct MUMPSNumericalSetup{M} <: Gridap.Algebra.NumericalSetup
     mumps::M
+    args::Tuple
 end
 
 function MUMPSNumericalSetup(mss::MUMPSSymbolicSetup, mat::AbstractMatrix)
-    mumps = mss.mumps
+    mumps = MUMPS.Mumps{eltype(mat)}(mss.args...)
     MUMPS.associate_matrix!(mumps, mat)
     MUMPS.factorize!(mumps)
-    return MUMPSNumericalSetup{typeof(mumps)}(mumps)
+    return MUMPSNumericalSetup{typeof(mumps)}(mumps, mss.args)
 end
 
 function Gridap.Algebra.symbolic_setup(ms::MUMPSSolver, mat::AbstractMatrix)
@@ -48,6 +38,8 @@ function Gridap.Algebra.numerical_setup(mss::MUMPSSymbolicSetup, mat::AbstractMa
 end
 
 function Gridap.Algebra.numerical_setup!(ns::MUMPSNumericalSetup, mat::AbstractMatrix)
+    MUMPS.finalize(ns.mumps)
+    ns.mumps = MUMPS.Mumps{eltype(mat)}(ns.args...)
     MUMPS.associate_matrix!(ns.mumps, mat)
     MUMPS.factorize!(ns.mumps)
     ns
